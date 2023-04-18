@@ -1,0 +1,18 @@
+project_name: terraform-log-exporter
+env:
+  - GO111MODULE=on
+builds:
+  - binary: terraform-log-exporter
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+archives:
+  - name_template: "{{ .Tag }}_{{ .Os }}_{{ .Arch }}"
+    format: tar.gz
+release:
+  github:
+    owner: kapetacom
+    name: terraform-log-exporter
+
