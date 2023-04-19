@@ -1,5 +1,5 @@
 # Stage 1: Build the Go binary
-FROM golang:1.16-alpine AS build
+FROM golang:1.20-alpine AS build
 WORKDIR /app
 COPY . .
 RUN CGO_ENABLED=0 go build -o terraform-log-exporter .
