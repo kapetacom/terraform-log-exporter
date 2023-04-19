@@ -54,21 +54,23 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
-		post(payload, kapetaToken, kapetaCallback)
+		err = post(payload, kapetaToken, kapetaCallback)
+		if err != nil {
+			log.Println(err)
+		}
 	}
 	if err := scanner.Err(); err != nil {
 		panic(err)
 	}
 }
 
-func post(payloadBytes []byte, kapetaToken string, kapetaCallback string) {
+func post(payloadBytes []byte, kapetaToken string, kapetaCallback string) error {
 
 	url := fmt.Sprintf("%s/info/log", kapetaCallback)
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(payloadBytes))
 	if err != nil {
-		fmt.Printf("Failed to create request: %s\n", err)
-		os.Exit(1)
+		return err
 	}
 
 	req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", kapetaToken))
@@ -77,11 +79,13 @@ func post(payloadBytes []byte, kapetaToken string, kapetaCallback string) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Printf("POST %s failed: %s\n", kapetaCallback, err)
-		os.Exit(1)
+		return err
 	}
 	defer resp.Body.Close()
 
 	fmt.Printf("POST %s responded with status: %s\n", kapetaCallback, resp.Status)
-
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("POST %s responded with status: %s", kapetaCallback, resp.Status)
+	}
+	return nil
 }
