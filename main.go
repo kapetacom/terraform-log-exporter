@@ -54,6 +54,7 @@ func main() {
 		if err != nil {
 			panic(err)
 		}
+		log.Println(string(payload))
 		err = post(payload, kapetaToken, kapetaCallback)
 		if err != nil {
 			log.Println(err)
