@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -39,13 +40,15 @@ func main() {
 
 	for scanner.Scan() {
 		var entry json.RawMessage
-		if err := json.Unmarshal(scanner.Bytes(), &entry); err != nil {
+		logLine := scanner.Bytes()
+		if err := json.Unmarshal(logLine, &entry); err != nil {
+			log.Printf("Failed to unmarshal log line: %s\n", string(logLine))
 			panic(err)
 		}
 		kapetaLog := KapetaLogEntry{
 			Created:   time.Now(),
 			StateType: "terraform",
-			State:     scanner.Bytes(),
+			State:     logLine,
 		}
 		payload, err := json.Marshal(kapetaLog)
 		if err != nil {
