@@ -50,6 +50,7 @@ func main() {
 			StateType: "terraform",
 			State:     logLine,
 		}
+
 		payload, err := json.Marshal(kapetaLog)
 		if err != nil {
 			panic(err)
@@ -84,7 +85,6 @@ func post(payloadBytes []byte, kapetaToken string, kapetaCallback string) error 
 	}
 	defer resp.Body.Close()
 
-	fmt.Printf("POST %s responded with status: %s\n", kapetaCallback, resp.Status)
 	if resp.StatusCode != 200 {
 		return fmt.Errorf("POST %s responded with status: %s", kapetaCallback, resp.Status)
 	}
