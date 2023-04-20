@@ -1,3 +1,3 @@
-module github.com/kapetacom/terraform-reporter
+module github.com/kapetacom/terraform-log-exporter
 
 go 1.20
