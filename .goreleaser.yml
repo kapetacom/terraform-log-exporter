@@ -17,3 +17,14 @@ release:
     owner: kapetacom
     name: terraform-log-exporter
 
+nfpms:
+  - id: terraform-log-exporter
+    maintainer: 'Kapeta <info@kapeta.com>'
+    description: terraform-log-exporter is a tool to forwards logs from terraform to a log server
+    package_name: terraform-log-exporter
+    formats:
+      - apk
+      - deb
+      - rpm
+  - rpm:
+     summary: terraform-log-exporter is a tool forwards logs from terraform to a log server
